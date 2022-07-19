@@ -4,6 +4,7 @@ import { getOptionsForVote } from "../utils/getRandomPokemon";
 import { inferQueryResponse } from "./api/trpc/[trpc]";
 
 import Image from "next/image";
+import Link from "next/link";
 
 const btn =
   "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow";
@@ -68,6 +69,10 @@ const Home = () => {
       </div>
       <div className="absolute bottom-0 w-full text-xl text-center pb-2">
         <a href="https://github.com/AgenticAI/pokemon">Github</a>
+        {" | "}
+        <Link href="/results">
+          <a href="/results">Results</a>
+        </Link>
       </div>
     </div>
   );
