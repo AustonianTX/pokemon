@@ -25,12 +25,20 @@ const Home = () => {
     },
   ]);
 
-  if (firstPokemon.isLoading || secondPokemon.isLoading) return null;
+  const voteMutation = trpc.useMutation(["cast-vote"]);
 
   const voteForRoundest = (selected: number) => {
+    if (selected === first) {
+      voteMutation.mutate({ votedFor: first, votedAgainst: second });
+    } else {
+      voteMutation.mutate({ votedFor: second, votedAgainst: first });
+    }
+
     // todo: fire mutation to persist changes
     updateIds(getOptionsForVote());
   };
+
+  if (firstPokemon.isLoading || secondPokemon.isLoading) return null;
 
   return (
     <div className="h-screen w-screen flex flex-col justify-center items-center">
