@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { trpc } from "@/utils/trpc";
 import { getOptionsForVote } from "../utils/getRandomPokemon";
 import { inferQueryResponse } from "./api/trpc/[trpc]";
 
-import type React from "react";
+import Image from "next/image";
 
 const btn =
   "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow";
@@ -42,28 +42,33 @@ const Home = () => {
   if (firstPokemon.isLoading || secondPokemon.isLoading) return null;
 
   return (
-    <div className="h-screen w-screen flex flex-col justify-center items-center">
-      <div className="text-2xl text-center">Which Pokemon is rounder?</div>
-      <div className="p-2"></div>
-      <div className="border rounded p-8 flex justify-between max-w-2xl items-center">
-        {!firstPokemon.isLoading &&
-          firstPokemon.data &&
-          !secondPokemon.isLoading &&
-          secondPokemon.data && (
-            <>
-              <PokemonListing
-                pokemon={firstPokemon.data}
-                vote={() => voteForRoundest(first)}
-              />
-              <div className="p-8">vs</div>
-              <PokemonListing
-                pokemon={secondPokemon.data}
-                vote={() => voteForRoundest(second)}
-              />
-            </>
-          )}
+    <div>
+      <div className="h-screen w-screen flex flex-col justify-center items-center">
+        <div className="text-2xl text-center">Which Pokemon is rounder?</div>
+        <div className="p-2"></div>
+        <div className="border rounded p-8 flex justify-between max-w-2xl items-center">
+          {!firstPokemon.isLoading &&
+            firstPokemon.data &&
+            !secondPokemon.isLoading &&
+            secondPokemon.data && (
+              <>
+                <PokemonListing
+                  pokemon={firstPokemon.data}
+                  vote={() => voteForRoundest(first)}
+                />
+                <div className="p-8">vs</div>
+                <PokemonListing
+                  pokemon={secondPokemon.data}
+                  vote={() => voteForRoundest(second)}
+                />
+              </>
+            )}
+        </div>
+        <div className="p-2"></div>
       </div>
-      <div className="p-2"></div>
+      <div className="absolute bottom-0 w-full text-xl text-center pb-2">
+        <a href="https://github.com/AgenticAI/pokemon">Github</a>
+      </div>
     </div>
   );
 };
@@ -76,10 +81,12 @@ const PokemonListing: React.FC<{
 }> = (props) => {
   return (
     <div className="flex flex-col ">
-      <img
+      <Image
         src={props.pokemon.sprites.front_default!}
+        width={256}
+        height={256}
         className="w-64 h-64"
-        alt=""
+        layout="fixed"
       />
       <div className="text-xl text-center capitalize -mt-12">
         {props.pokemon.name}
