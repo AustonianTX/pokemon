@@ -40,39 +40,46 @@ const Home = () => {
     updateIds(getOptionsForVote());
   };
 
-  if (firstPokemon.isLoading || secondPokemon.isLoading) return null;
+  const dataLoaded =
+    !firstPokemon.isLoading &&
+    firstPokemon.data &&
+    !secondPokemon.isLoading &&
+    secondPokemon.data;
+
+  // const dataLoaded = false;
 
   return (
     <div>
-      <div className="h-screen w-screen flex flex-col justify-center items-center">
-        <div className="text-2xl text-center">Which Pokemon is rounder?</div>
-        <div className="p-2"></div>
-        <div className="border rounded p-8 flex justify-between max-w-2xl items-center">
-          {!firstPokemon.isLoading &&
-            firstPokemon.data &&
-            !secondPokemon.isLoading &&
-            secondPokemon.data && (
-              <>
-                <PokemonListing
-                  pokemon={firstPokemon.data}
-                  vote={() => voteForRoundest(first)}
-                />
-                <div className="p-8">vs</div>
-                <PokemonListing
-                  pokemon={secondPokemon.data}
-                  vote={() => voteForRoundest(second)}
-                />
-              </>
-            )}
+      <div className="h-screen w-screen flex flex-col justify-between items-center relative">
+        <div className="text-2xl text-center pt-8">
+          Which Pokemon is rounder?
         </div>
-        <div className="p-2"></div>
-      </div>
-      <div className="absolute bottom-0 w-full text-xl text-center pb-2">
-        <a href="https://github.com/AgenticAI/pokemon">Github</a>
-        {" | "}
-        <Link href="/results">
-          <a href="/results">Results</a>
-        </Link>
+
+        {dataLoaded && (
+          <>
+            <div className="border rounded p-8 flex justify-between items-center max-w-2xl">
+              <PokemonListing
+                pokemon={firstPokemon.data}
+                vote={() => voteForRoundest(first)}
+              />
+              <div className="p-8">vs</div>
+              <PokemonListing
+                pokemon={secondPokemon.data}
+                vote={() => voteForRoundest(second)}
+              />
+              <div className="p-2"></div>
+            </div>
+          </>
+        )}
+        {!dataLoaded && <img src="/ring-loader.svg" className="w-48" />}
+
+        <div className="w-full text-xl text-center pb-2">
+          <a href="https://github.com/AgenticAI/pokemon">Github</a>
+          {" | "}
+          <Link href="/results">
+            <a href="/results">Results</a>
+          </Link>
+        </div>
       </div>
     </div>
   );
