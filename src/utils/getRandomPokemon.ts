@@ -3,8 +3,6 @@ const MAX_DEX_ID = 493;
 export const getRandomPokemon: (notThisOne?: number) => number = (
   notThisOne
 ) => {
-  console.log("calling random");
-
   const pokedexNumber = Math.floor(Math.random() * MAX_DEX_ID) + 1;
 
   if (pokedexNumber !== notThisOne) return pokedexNumber;
