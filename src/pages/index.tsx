@@ -27,8 +27,7 @@ const Home = () => {
 
   const voteForRoundest = (selected: number) => {
     // todo: fire mutation to persist changes
-
-    updateIds();
+    // updateIds();
   };
 
   return (
