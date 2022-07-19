@@ -43,7 +43,9 @@ const PokemonListing: React.FC<{
         <Image src={pokemon.spriteUrl} width={64} height={64} layout="fixed" />
         <div className="capitalize">{pokemon.name}</div>
       </div>
-      <div className="pr-2">{generateCountPercent(pokemon) + "%"}</div>
+      <div className="pr-2">
+        {generateCountPercent(pokemon).toFixed(2) + "%"}
+      </div>
     </div>
   );
 };
