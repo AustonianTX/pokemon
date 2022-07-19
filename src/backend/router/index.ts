@@ -9,10 +9,13 @@ export const appRouter = trpc
   .query("get-pokemon-by-id", {
     input: z.object({ id: z.number() }),
     async resolve({ input }) {
-      const pokeApiConnection = new PokemonClient();
+      const pokemon = await prisma.pokemon.findFirst({
+        where: { id: input.id },
+      });
 
-      const pokemon = await pokeApiConnection.getPokemonById(input.id);
-      return { name: pokemon.name, sprites: pokemon.sprites };
+      if (!pokemon) throw new Error("lol doesn't exist");
+
+      return pokemon;
     },
   })
   .mutation("cast-vote", {
